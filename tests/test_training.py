@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 
 from network import NeuralNetwork
-from optimizers import Adam
+from optimizers import Adam, SGD
 from training import train
 
 
@@ -26,7 +26,7 @@ class TestTrain:
             model = NeuralNetwork(use_batchnorm=True, use_dropout=True)
         except TypeError:
             model = NeuralNetwork()
-        optimizer = Adam(lr=0.001)
+        optimizer = SGD(lr=0.01)
         x_train, y_train = tiny_data
         history = train(model, optimizer, x_train, y_train, epochs=1, batch_size=64)
         assert isinstance(history, list)

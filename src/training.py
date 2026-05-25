@@ -45,9 +45,6 @@ def train(model, optimizer, x_train, y_train, epochs=20, batch_size=128):
 
 
         for j in range(0, train_size, batch_size):
-            
-
-
 
             # 미니배치 획득
             batch_idx = indices[j:j + batch_size]
