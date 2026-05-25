@@ -99,20 +99,18 @@ class BatchNorm:
         """
         # TODO: train=True에서는 batch mean/var로 정규화하고 running 통계를 갱신하세요.
         if (train):
-            batch_size = x.shape[0]
-            batch_mean = np.sum(x) / batch_size
-            batch_var = np.sum((x - self.beta)**2) / batch_size # 문법을 몰르겟네
+            
+            batch_mean = np.mean(x, axis=0)
+            batch_var = np.var(x, axis=0)
 
             self.xc = x - batch_mean
             self.std = np.sqrt(batch_var + self.eps)
             self.xn = self.xc / self.std
 
-            x_hat = (x - batch_mean) / np.sqrt(batch_var + self.eps)
-
-            # running mean이랑 var 도 업데이트를 같이 시켜줘야 하는데? 얘는 공식이 책에 없어서 찾아봐야됨 
             self.running_mean = self.momentum * self.running_mean + (1 - self.momentum) * batch_mean
-            self.running_var  = self.momentum * self.running_var  + (1 - self.momentum) * batch_var
+            self.running_var = self.momentum * self.running_var + (1 - self.momentum) * batch_var
 
+            return self.gamma * self.xn + self.beta
         # TODO: train=False에서는 running_mean/running_var를 사용하세요.
         else:
             xc = x - self.running_mean

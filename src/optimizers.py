@@ -44,8 +44,9 @@ class Adam:
 
   
         for key, val in params.items():
-            self.m[key] = np.zeros_like(val)
-            self.v[key] = np.zeros_like(val)
+            if key not in self.m:
+                self.m[key] = np.zeros_like(val)
+                self.v[key] = np.zeros_like(val)
         
         self.iter += 1
         lr_t  = self.lr * np.sqrt(1.0 - self.beta2**self.iter) / (1.0 - self.beta1**self.iter)   # 여기서 학습률 조정해서 AdaGrad랑 융합햇다고 햇나보다.......     

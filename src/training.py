@@ -44,14 +44,16 @@ def train(model, optimizer, x_train, y_train, epochs=20, batch_size=128):
 
         indices = np.random.permutation(train_size)
 
+
         for j in range(0, train_size, batch_size):
             
 
 
 
             # 미니배치 획득
-            x_batch = x_train[j:j + batch_size]
-            t_batch = y_train[j:j + batch_size]
+            batch_idx = indices[j:j + batch_size]
+            x_batch = x_train[batch_idx]
+            t_batch = y_train[batch_idx]
         
             # forward/loss/backward/update를 수행
         
